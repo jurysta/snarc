@@ -1,0 +1,29 @@
+{
+  "name": "engram",
+  "version": "0.1.0",
+  "description": "Salience-gated memory for Claude Code — captures what matters, forgets what doesn't, consolidates patterns while sleeping",
+  "type": "module",
+  "main": "dist/src/server.js",
+  "bin": {
+    "engram": "dist/src/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "better-sqlite3": "^11.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dp-web4/engram.git"
+  }
+}
