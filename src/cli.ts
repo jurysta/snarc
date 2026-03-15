@@ -71,6 +71,50 @@ async function main() {
       break;
     }
 
+    case 'review': {
+      const proposals = memory.getProposedIdentity();
+      if (proposals.length === 0) {
+        console.log('No proposed identity facts to review.');
+        break;
+      }
+      console.log(`${proposals.length} proposed identity fact(s) from deep dream:\n`);
+      for (const p of proposals) {
+        const summary = p.summary.replace(/^\[proposed\]\s*/, '');
+        console.log(`  #${p.id} (confidence: ${p.confidence.toFixed(2)})`);
+        console.log(`    ${summary}`);
+        if (p.detail) console.log(`    ${p.detail}`);
+        console.log();
+      }
+      console.log('To promote:  engram promote <id> "<key>" "<value>"');
+      console.log('To reject:   engram reject <id>');
+      break;
+    }
+
+    case 'promote': {
+      const id = parseInt(args[0]);
+      const key = args[1];
+      const value = args.slice(2).join(' ');
+      if (!id || !key || !value) {
+        console.error('Usage: engram promote <id> "<key>" "<value>"');
+        console.error('Example: engram promote 42 "test_framework" "Jest"');
+        process.exit(1);
+      }
+      memory.promoteIdentity(id, key, value);
+      console.log(`Promoted to Tier 3: ${key} = ${value} (source: human-confirmed)`);
+      break;
+    }
+
+    case 'reject': {
+      const id = parseInt(args[0]);
+      if (!id) {
+        console.error('Usage: engram reject <id>');
+        process.exit(1);
+      }
+      memory.rejectIdentity(id);
+      console.log(`Rejected and removed proposal #${id}`);
+      break;
+    }
+
     case 'dream': {
       const deep = args.includes('--deep');
       const sessionId = args.find(a => !a.startsWith('-')) || 'manual-dream';
@@ -93,11 +137,14 @@ async function main() {
       console.log(`engram — salience-gated memory for Claude Code
 
 Usage:
-  engram stats            Memory health dashboard
-  engram search <query>   Search across all tiers
-  engram patterns [kind]  List consolidated patterns
-  engram export           Export Tier 2+3 to markdown
-  engram dream [--deep]   Trigger consolidation (--deep uses LLM)`);
+  engram stats              Memory health dashboard
+  engram search <query>     Search across all tiers
+  engram patterns [kind]    List consolidated patterns
+  engram export             Export Tier 2+3 to markdown
+  engram dream [--deep]     Trigger consolidation (--deep uses LLM)
+  engram review             List quarantined identity proposals
+  engram promote <id> k v   Promote proposal to Tier 3 identity
+  engram reject <id>        Delete a quarantined proposal`);
   }
 }
 

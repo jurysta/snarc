@@ -264,6 +264,14 @@ export function prepareStatements(db: Database.Database) {
       WHERE julianday('now') - julianday(ts) > 7
     `),
 
+    // Proposed identity management
+    getProposedIdentity: db.prepare(`
+      SELECT id, summary, detail, confidence FROM patterns
+      WHERE kind = 'proposed_identity' ORDER BY confidence DESC
+    `),
+
+    deletePattern: db.prepare(`DELETE FROM patterns WHERE id = ?`),
+
     getStats: db.prepare(`
       SELECT
         (SELECT COUNT(*) FROM observations) as obs_count,

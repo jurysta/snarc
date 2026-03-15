@@ -260,6 +260,22 @@ export class EngramMemory {
     return lines.join('\n');
   }
 
+  /** List quarantined identity proposals from deep dream */
+  getProposedIdentity(): any[] {
+    return this.stmts.getProposedIdentity.all();
+  }
+
+  /** Promote a proposed identity to Tier 3 (human-confirmed) */
+  promoteIdentity(patternId: number, key: string, value: string): void {
+    this.stmts.upsertIdentity.run(key, value, 'human-confirmed', 0.9);
+    this.stmts.deletePattern.run(patternId);
+  }
+
+  /** Reject a proposed identity (delete from quarantine) */
+  rejectIdentity(patternId: number): void {
+    this.stmts.deletePattern.run(patternId);
+  }
+
   close(): void {
     this.db.close();
   }
