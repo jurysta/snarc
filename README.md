@@ -121,17 +121,29 @@ Tier 0 and 1 stay local — they're raw and session-specific.
 
 ## Install
 
+### Claude Code Plugin (recommended)
+
+```bash
+/plugin install engram
+```
+
+This registers all 5 hooks, the MCP server, and the CLI automatically. Nothing else to configure.
+
+### From source
+
 ```bash
 git clone https://github.com/dp-web4/engram.git
-cd engram && npm install && npm run build && npm link
+cd engram && bash install.sh
 ```
 
-Register MCP server:
+### npm
+
 ```bash
-claude mcp add -s user engram -- node /path/to/engram/dist/src/server.js
+npm install -g engram-memory
+claude mcp add -s user engram -- node $(npm root -g)/engram-memory/dist/src/server.js
 ```
 
-Register hooks in `~/.claude/settings.json` — see the [fleet install guide](https://github.com/dp-web4/private-context/blob/main/machines/engram-fleet-install.md) or the `hooks/` directory for the full configuration.
+For manual hook configuration, see the `hooks/` directory.
 
 ## CLI
 

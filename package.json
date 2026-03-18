@@ -1,5 +1,5 @@
 {
-  "name": "engram",
+  "name": "engram-memory",
   "version": "0.3.0",
   "description": "Salience-gated memory for Claude Code — captures what matters, forgets what doesn't, consolidates patterns while sleeping",
   "type": "module",
@@ -7,10 +7,34 @@
   "bin": {
     "engram": "dist/src/cli.js"
   },
+  "files": [
+    "dist/",
+    "hooks/",
+    ".claude-plugin/",
+    "install.sh",
+    "README.md",
+    "COMPARISON.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "postinstall": "npm run build || true",
+    "prepublishOnly": "npm run build"
   },
+  "keywords": [
+    "claude-code",
+    "memory",
+    "persistence",
+    "salience",
+    "SNARC",
+    "attention",
+    "context",
+    "plugin",
+    "mcp",
+    "dream-cycle",
+    "SAGE"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "better-sqlite3": "^11.0.0",
@@ -21,9 +45,17 @@
     "@types/node": "^22.0.0",
     "typescript": "^5.5.0"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/dp-web4/engram.git"
-  }
+  },
+  "homepage": "https://github.com/dp-web4/engram",
+  "bugs": {
+    "url": "https://github.com/dp-web4/engram/issues"
+  },
+  "author": "dp-web4 <dp@metalinxx.io>"
 }

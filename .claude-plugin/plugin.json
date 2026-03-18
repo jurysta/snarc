@@ -1,0 +1,77 @@
+{
+  "name": "engram",
+  "description": "Salience-gated memory for Claude Code — captures what matters, forgets what doesn't, consolidates patterns while sleeping. SNARC scoring (Surprise, Novelty, Arousal, Reward, Conflict) filters observations at capture time. Four-tier memory: buffer → observations → patterns → identity. Automatic context injection on session start, prompt submit, and post-compaction. Dream cycles extract workflows and error-fix chains. Confidence decay prevents memory distortion.",
+  "version": "0.3.0",
+  "author": {
+    "name": "dp-web4",
+    "email": "dp@metalinxx.io"
+  },
+  "homepage": "https://github.com/dp-web4/engram",
+  "category": "productivity",
+  "keywords": ["memory", "persistence", "salience", "SNARC", "context", "attention", "dream-cycle", "SAGE"],
+  "strict": true,
+  "mcpServers": {
+    "engram": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/src/server.js"]
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/hooks/handlers/session-start.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/hooks/handlers/user-prompt.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/hooks/handlers/post-tool-use.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/hooks/handlers/post-compact.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/hooks/handlers/session-end.js",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

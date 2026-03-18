@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "engram-memory",
+  "description": "Salience-gated memory plugins for Claude Code",
+  "owner": {
+    "name": "dp-web4",
+    "email": "dp@metalinxx.io"
+  },
+  "plugins": [
+    {
+      "name": "engram",
+      "description": "Salience-gated memory — captures what matters, forgets what doesn't, consolidates patterns while sleeping. Unlike log-everything approaches, engram scores each observation on 5 dimensions (Surprise, Novelty, Arousal, Reward, Conflict) and only stores what's salient. Automatic context injection, confidence decay, and dream-cycle pattern extraction.",
+      "version": "0.3.0",
+      "author": {
+        "name": "dp-web4",
+        "email": "dp@metalinxx.io"
+      },
+      "source": {
+        "source": "github",
+        "repo": "dp-web4/engram"
+      },
+      "category": "productivity",
+      "keywords": ["memory", "persistence", "salience", "attention", "context", "SNARC", "dream-cycle"],
+      "homepage": "https://github.com/dp-web4/engram",
+      "tags": ["community-managed"]
+    }
+  ]
+}
