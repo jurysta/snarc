@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "postinstall": "npm run build || true",
+    "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
